@@ -9,11 +9,8 @@ class CustomerMembership:
         }
 
 
-    def __init__(self, username, membership = None):
+    def __init__(self, username):
         self.username = username
-        # self.monthly_expense = monthly_expense
-        # self.monthly_income = monthly_income
-        self.membership = membership
 
     def show_benefit(self):
         benefit = [
@@ -81,5 +78,29 @@ class CustomerMembership:
                 self.data_membership[self.username] = member
                 return(f'Predict membership: {member}')
 
-    def calculate_price(membership, list_harga_barang):
-        print(1)
+    def calculate_price(self, username, list_harga_barang):
+        """Fungsi untuk menghitung harga setelah diskon sesuai dari tipe membershipnya.""" 
+        
+        try:
+            if username in self.data_membership:
+                member = self.data_membership.get(username, '')
+                if member == 'Platinum':
+                    diskon = sum(list_harga_barang) * 0.15
+                    total_price = sum(list_harga_barang) - diskon
+                    return total_price
+                elif member == 'Gold':
+                    diskon = sum(list_harga_barang) * 0.1
+                    total_price = sum(list_harga_barang) - diskon
+                    return total_price
+                elif member == 'Silver':
+                    diskon = sum(list_harga_barang) * 0.08
+                    total_price = sum(list_harga_barang) - diskon
+                    return total_price
+                else:
+                    print("Untuk tipe membership tidak tersedia.")
+            else:
+                print('Member tidak ditemukan.')
+        except:
+            print("Invalid Process")
+
+        
